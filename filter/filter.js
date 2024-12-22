@@ -1,50 +1,96 @@
-// even numbers [1, 2, 3, 4, 5] => [2, 4]
-const filterEvenNumbers = function (numbers) { };
+const getAverage = function (items, fieldName) {
+    const totalValue = items.reduce((total, item) => total + item[fieldName], 0);
+    return totalValue / items.length;
+}
+
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+
+const filterEvenNumbers = function (numbers) {
+    return numbers.filter((number) => number % 2 === 0);
+};
 
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
-const filterLongWords = function (words) { };
+const filterLongWords = function (words) {
+    return words.filter((word) => word.length > 5);
+};
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
-const filterAdults = function (people) { };
+const filterAdults = function (people) { 
+    return people.filter((person) => person.age > 30);
+};
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
-const filterActiveUsers = function (users) { };
+const filterActiveUsers = function (users) {
+    return users.filter((user) => user.active)
+};
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
-const filterNumbersGreaterThanTen = function (numbers) { };
+const filterNumbersGreaterThanTen = function (numbers) {
+    return numbers.filter((number) => number > 10);
+};
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
-const filterLongBooks = function (books) { };
+const filterLongBooks = function (books) {
+    return books.filter((book) => book.pages > 200);
+};
 
 // users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
-const filterIncompleteProfiles = function (users) { };
+const filterIncompleteProfiles = function (users) {
+    return users.filter((user) => !user.profileComplete)
+};
 
 // students with grades above 80 [{name: "John", grade: 75}, {name: "Jane", grade: 85}] => [{name: "Jane", grade: 85}]
-const filterHighGrades = function (students) { };
+const filterHighGrades = function (students) {
+    return students.filter((student) => student.grade > 80)
+};
 
 // products that are in stock [{product: "apple", inStock: true}, {product: "banana", inStock: false}] => [{product: "apple", inStock: true}]
-const filterInStockProducts = function (products) { };
+const filterInStockProducts = function (products) {
+    return products.filter((product) => product.inStock)
+};
 
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
 const filterRecentOrders = function (orders) { };
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
-const filterBelowAveragePrice = function (products) { };
+const filterBelowAveragePrice = function (products) {
+    const averagePrice = getAverage(products, 'price');
+    return products.filter((product) => product.price < averagePrice);
+};
 
 // active users who posted in the last 7 days [{username: "alice", lastPostDate: "2024-12-01", active: true}, {username: "bob", lastPostDate: "2024-11-20", active: true}] => [{username: "alice", lastPostDate: "2024-12-01", active: true}]
 const filterRecentActiveUsers = function (users) { };
 
 // students who passed all subjects [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}, {name: "Jane", subjects: [{name: "Math", passed: false}, {name: "Science", passed: true}]}] => [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}]
-const filterStudentsWithAllSubjectsPassed = function (students) { };
+const isAllSubjectsPassed = function (subjects) {
+    return subjects.every((subject) => subject.passed)
+}
+
+const filterStudentsWithAllSubjectsPassed = function (students) {
+    return students.filter((student) => isAllSubjectsPassed(student.subjects))
+};
 
 // people whose birthday is this month [{name: "Alice", birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] => [{name: "Alice", birthDate: "2024-12-01"}]
-const filterBirthdaysThisMonth = function (people) { };
+const getMonth = function (date) {
+    return +date.slice(5, 7);
+}
+
+const filterBirthdaysThisMonth = function (people) {
+    return people.filter((person) => getMonth(person.birthDate === 12));
+};
 
 // orders that exceed the average order value [{orderId: 1, amount: 20}, {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => [{orderId: 2, amount: 50}]
-const filterHighValueOrders = function (orders) { };
+const filterHighValueOrders = function (orders) {
+    const averageAmount = getAverage(orders, 'amount');
+    return orders.filter((order) => order.amount > averageAmount);
+};
 
 // books with reviews higher than the average rating [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
-const filterTopRatedBooks = function (books) { };
+const filterTopRatedBooks = function (books) {
+    const averageRating = getAverage(books, 'rating');
+    return books.filter((book) => book.rating > averageRating);
+};
 
 // employees whose salary is higher than the department average [{name: "Alice", salary: 5000, department: "HR"}, {name: "Bob", salary: 7000, department: "HR"}, {name: "Charlie", salary: 4000, department: "IT"}] => [{name: "Bob", salary: 7000, department: "HR"}]
 const filterHighSalaryEmployees = function (employees) { };
@@ -287,53 +333,3 @@ const filterByRange = function (numbers, ranges) { };
 // Input: [1, 2, 3, 4, 5], [2, 4, 6]
 // Output: [2, 4]
 const filterEvenNumbersByMembership = function (numbers, criteria) { };
-
-// Find countries that exist based on a lookup object with country names as keys and existence status as values.
-// Input: ["India", "USA", "Iran"], { "India": "exists", "USA": "does not exist", "Iran": "exists" }
-// Output: ["India", "Iran"]
-const findCountriesThatExist = function (countries, lookup) { };
-
-// Find numbers that are marked as 'valid' in the lookup object.
-// Input: [10, 20, 30, 40], {10: "valid", 20: "invalid", 30: "valid", 40: "valid"}
-// Output: [10, 30, 40]
-const findValidNumbers = function (numbers, lookup) { };
-
-// Find users whose account status is 'active' from the lookup object.
-// Input: ["Alice", "Bob", "Charlie"], { "Alice": { status: "active" }, "Bob": { status: "inactive" }, "Charlie": { status: "active" } }
-// Output: ["Alice", "Charlie"]
-const findActiveUsers = function (users, lookup) { };
-
-// Find strings where the length of the string is greater than the corresponding numeric threshold in the lookup object.
-// Input: ["apple", "banana", "kiwi"], { "apple": 4, "banana": 5, "kiwi": 6 }
-// Output: ["banana"]
-const findStringsAboveThreshold = function (strings, lookup) { };
-
-// Find the products whose price is less than a given threshold from the lookup object.
-// Input: ["Laptop", "Phone", "Tablet"], { "Laptop": { price: 1000 }, "Phone": { price: 500 }, "Tablet": { price: 300 } }
-// Output: ["Phone", "Tablet"]
-const findAffordableProducts = function (products, lookup) { };
-
-// Find students who have scored more than a given score in their exam from the lookup object.
-// Input: ["John", "Alice", "Bob"], { "John": 85, "Alice": 92, "Bob": 70 }
-// Output: ["John", "Alice"]
-const findHighScoringStudents = function (students, lookup) { };
-
-// Find employees who have been at the company for more than 5 years based on the lookup object.
-// Input: ["John", "Alice", "Bob"], { "John": { yearsAtCompany: 6 }, "Alice": { yearsAtCompany: 4 }, "Bob": { yearsAtCompany: 7 } }
-// Output: ["John", "Bob"]
-const findLongTermEmployees = function (employees, lookup) { };
-
-// Find cities with a population greater than a threshold provided in the lookup object.
-// Input: ["London", "Paris", "Tokyo"], { "London": { population: 9000000 }, "Paris": { population: 2200000 }, "Tokyo": { population: 14000000 } }
-// Output: ["London", "Tokyo"]
-const findLargeCities = function (cities, lookup) { };
-
-// Find items in an inventory whose quantity is greater than 10 based on the lookup object.
-// Input: ["item1", "item2", "item3"], { "item1": { quantity: 15 }, "item2": { quantity: 5 }, "item3": { quantity: 20 } }
-// Output: ["item1", "item3"]
-const findInStockItems = function (items, lookup) { };
-
-// Find animals whose habitat matches the required type from the lookup object.
-// Input: ["Lion", "Elephant", "Shark"], { "Lion": { habitat: "Jungle" }, "Elephant": { habitat: "Jungle" }, "Shark": { habitat: "Ocean" } } , "Jungle"
-// Output: ["Lion", "Elephant"]
-const findAnimalsByHabitat = function (animals, lookup) { };
